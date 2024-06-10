@@ -33,5 +33,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/sergisvk/ExarotonResetAPI:${{ github.sha }}, ghcr.io/sergisvk/ExarotonResetAPI:latest
+          tags: ghcr.io/sergisvk/exaroton-reset:${{ github.sha }}, ghcr.io/sergisvk/exaroton-reset:latest
           platforms: linux/amd64,linux/arm64/v8
