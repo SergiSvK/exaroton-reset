@@ -27,7 +27,7 @@ def start_server():
 def schedule_daily_task():
     now_utc = datetime.datetime.now(pytz.utc)
     now_timezone = now_utc.astimezone(timezone)
-    next_run_time = now_timezone.replace(hour=int(os.getenv("hour")), minute=int(os.getenv("MINUTE")), second=0,
+    next_run_time = now_timezone.replace(hour=int(os.getenv("HOUR")), minute=int(os.getenv("MINUTE")), second=0,
                                          microsecond=0)
 
     if now_timezone >= next_run_time:
