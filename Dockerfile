@@ -13,6 +13,6 @@ ENV TOKEN=""
 ENV HOUR=""
 ENV MINUTE=""
 ENV TIMEZONE=""
-ENV WEEBHOOK=""
+ENV WEBHOOK_URL=""
 
 CMD ["python", "main.py"]
