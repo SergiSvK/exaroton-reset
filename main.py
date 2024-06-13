@@ -38,7 +38,8 @@ def schedule_daily_task():
     delay_seconds = (schedule_time - now_utc).total_seconds()
     delay_hours = delay_seconds / 3600
 
-    WebhookSend.send_message(f"Programado para iniciar el servidor a las 6:00 AM en Chile, en {delay_hours:.2f} horas.")
+    WebhookSend.send_message(f":radio_button: Programado para iniciar el servidor a las "
+                             f"{next_run_time.strftime('%H:%M')} UTC ({timezone.zone}). Faltan {delay_hours:.2f} horas")
 
     time.sleep(delay_seconds)
     start_server()
