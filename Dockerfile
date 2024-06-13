@@ -10,5 +10,9 @@ COPY . .
 # =============== TOKEN API ===============
 
 ENV TOKEN=""
+ENV HOUR=""
+ENV MINUTE=""
+ENV TIMEZONE=""
+ENV WEEBHOOK=""
 
 CMD ["python", "main.py"]
