@@ -10,9 +10,9 @@ COPY . .
 # =============== TOKEN API ===============
 
 ENV TOKEN=""
-ENV HOUR=""
-ENV MINUTE=""
 ENV TIMEZONE=""
 ENV WEBHOOK_URL=""
+ENV CRON_SCHEDULE=""
+ENV ID_SERVER=""
 
 CMD ["python", "main.py"]
