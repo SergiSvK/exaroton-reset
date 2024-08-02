@@ -98,10 +98,10 @@ Para desplegar el proyecto utilizando Docker Compose, sigue estos pasos:
         image: ghcr.io/sergisvk/exaroton-reset:latest
         environment:
           - TOKEN=${TOKEN}
-          - HOUR=${HOUR}
-          - MINUTE=${MINUTE}
           - TIMEZONE=${TIMEZONE}
           - WEBHOOK_URL=${WEBHOOK_URL}
+          - ID_SERVER=${ID_SERVER}
+          - CRON_SCHEDULE=${CRON_SCHEDULE}
         restart: unless-stopped
     ```
 
