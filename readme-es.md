@@ -1,26 +1,27 @@
 # 🚀 Exaroton Server Scheduler
 
-This project is a Python application that schedules and manages the start of an Exaroton server at a specific time each day. It uses Docker for containerization and GitHub Actions for continuous integration and deployment.
+Este proyecto es una aplicación en Python que programa y gestiona el inicio de un servidor de Exaroton a una hora específica cada día.
+Utiliza Docker para la contenedorización y GitHub Actions para la integración y despliegue continuo.
 
 [![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![Fork](https://img.shields.io/github/forks/sergisvk/exaroton-reset?style=social)](https://github.com/sergisvk/exaroton-reset/fork)
 
-## 📋 Requirements
+## 📋 Requisitos
 
 - Python 3.10 🐍
 - Docker 🐳
 - GitHub Actions ⚙️
-- An Exaroton account 🌐
+- Una cuenta en Exaroton 🌐
 
-## 🛠️ Installation
+## 🛠️ Instalación
 
-1. Clone the repository:
+1. Clona el repositorio:
     ```sh
     git clone https://github.com/sergisvk/exaroton-reset.git
     cd exaroton-reset
     ```
 
-2. Create a `.env` file in the root directory of the project and add the following environment variables:
+2. Crea un archivo `.env` en el directorio raíz del proyecto y añade las siguientes variables de entorno:
 
     ```env
     TOKEN=
@@ -30,42 +31,44 @@ This project is a Python application that schedules and manages the start of an 
     ID_SERVER=""
     ```
 
-### Explanation of each environment variable
+### Explicación de cada variable de entorno
 
-- `TOKEN`: This is the Exaroton API token used to authenticate requests to the Exaroton API. You must get this token from your Exaroton account.
+- `TOKEN`: Este es el token de API de Exaroton que se utiliza para autenticar las solicitudes a la API de Exaroton. Debes obtener este token desde tu cuenta de Exaroton. Simply get an API Token from your Account and you're good to go.
 
-- `TIMEZONE`: The time zone in which you want to schedule the server start. It must be in a recognized [tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) format (e.g., `Europe/Madrid`).
+- `TIMEZONE`: La zona horaria en la que deseas programar el inicio del servidor. Debe estar en un formato reconocido [tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (por ejemplo, `Europe/Madrid`).
 
-- `WEBHOOK_URL`: The webhook URL where notifications will be sent. This can be a Discord webhook URL or another service that accepts webhooks.
+- `WEBHOOK_URL`: La URL del webhook donde se enviarán las notificaciones. Esto puede ser una URL de webhook de Discord u otro servicio que acepte webhooks.
 
-- `CRON_SCHEDULE`: The cron schedule for starting the server. In this case, it is set to start the server every day at 6:00 AM (`"0 6 * * *"`).
+- `CRON_SCHEDULE`: La programación cron para iniciar el servidor. En este caso, está configurado para iniciar el servidor todos los días a las 6:00 AM (`"0 6 * * *"`).
 
-- `ID_SERVER`: The ID of your Exaroton server. This ID is unique for each server and is used to identify the server you want to start.
+- `ID_SERVER`: El ID de tu servidor de Exaroton. Este ID es único para cada servidor y se utiliza para identificar el servidor que deseas iniciar.
 
-### Explanation of cron functionality
+### Explicación del funcionamiento del cron
 
-The cron format is used to schedule tasks at specific intervals. The syntax of a cron expression is as follows:
+El formato de cron se utiliza para programar tareas en intervalos específicos.
+La sintaxis de una expresión cron es la siguiente:
 
 ```cmd
 * * * * *
 | | | | |
-| | | | +---- Day of the week (0 - 7) (Sunday to Saturday, where 0 and 7 are Sunday)
-| | | +------ Month (1 - 12)
-| | +-------- Day of the month (1 - 31)
-| +---------- Hour (0 - 23)
-+------------ Minute (0 - 59)
+| | | | +---- Día de la semana (0 - 7) (domingo a sábado, donde 0 y 7 son domingo)
+| | | +------ Mes (1 - 12)
+| | +-------- Día del mes (1 - 31)
+| +---------- Hora (0 - 23)
++------------ Minuto (0 - 59)
 ```
 
-Each field can contain one or more values, separated by commas. Values can be specific numbers, ranges of numbers, or special characters such as `*` (any value), `/` (increments), and `-` (ranges).
+Cada campo puede contener uno o más valores, separados por comas.
+Los valores pueden ser números específicos, rangos de números, o caracteres especiales como `*` (cualquier valor), `/` (incrementos), y `-` (rangos).
 
-#### Examples of cron expressions:
+#### Ejemplos de expresiones cron:
 
-- `0 6 * * *`: Runs the task at 6:00 AM every day.
-- `*/15 * * * *`: Runs the task every 15 minutes.
-- `0 0 1 * *`: Runs the task at midnight on the first day of every month.
-- `0 12 * * 1-5`: Runs the task at 12:00 PM (noon) from Monday to Friday.
+- `0 6 * * *`: Ejecuta la tarea todos los días a las 6:00 AM.
+- `*/15 * * * *`: Ejecuta la tarea cada 15 minutos.
+- `0 0 1 * *`: Ejecuta la tarea a la medianoche del primer día de cada mes.
+- `0 12 * * 1-5`: Ejecuta la tarea a las 12:00 PM de lunes a viernes.
 
-1. Build the Docker image and run the container:
+1. Construye y ejecuta el contenedor Docker:
     ```sh
     docker build -t exaroton-reset .
     docker run --env-file .env exaroton-reset
@@ -73,16 +76,19 @@ Each field can contain one or more values, separated by commas. Values can be sp
 
 ## 🚀 Uso
 
-The application will run and schedule the start of the Exaroton server at the specified time in the configured time zone. It will also send notifications via a webhook.
-## 🚢 Deployment
+La aplicación se ejecutará y programará el inicio del servidor de Exaroton a la hora especificada en la zona horaria configurada.
+También enviará notificaciones a través de un webhook.
 
-The project is configured to deploy automatically using GitHub Actions. Whenever a new version is released or a push is made to the `master` branch, a new Docker image will be built and published to the GitHub Container Registry.
+## 🚢 Despliegue
 
-### Deployment with Docker Compose
+El proyecto está configurado para desplegarse automáticamente utilizando GitHub Actions.
+Cada vez que se publique una nueva versión o se haga un push a la rama `master`, se construirá y publicará una nueva imagen Docker en el GitHub Container Registry.
 
-To deploy the project using Docker Compose, follow these steps:
+### Despliegue con Docker Compose
 
-1. Create a `docker-compose.yml` file in the root directory of the project with the following content:
+Para desplegar el proyecto utilizando Docker Compose, sigue estos pasos:
+
+1. Crea un archivo `docker-compose.yml` en el directorio raíz del proyecto con el siguiente contenido:
 
     ```yaml
     version: '3.8'
@@ -99,26 +105,27 @@ To deploy the project using Docker Compose, follow these steps:
         restart: unless-stopped
     ```
 
-2. Run the following command to start the container:
+2. Ejecuta el siguiente comando para iniciar el contenedor:
 
     ```sh
     docker-compose up -d
     ```
 
-This will start the container using the latest image published in the GitHub Container Registry and the environment variables defined in the `.env` file.
+Esto iniciará el contenedor utilizando la imagen más reciente publicada en el GitHub Container Registry y las variables de entorno definidas en el archivo `.env`.
 
-## 📂 Important Files
+## 📂 Archivos Importantes
 
-- `main.py`: Contains the main logic of the application.
-- `Dockerfile`: Defines how the Docker image is built.
-- `requirements.txt`: List of Python dependencies.
-- `.github/workflows/docker-image.yml`: GitHub Actions configuration for CI/CD.
-- `.env`: Environment variable configuration file (not included in the repository).
+- `main.py`: Contiene la lógica principal de la aplicación.
+- `Dockerfile`: Define cómo se construye la imagen Docker.
+- `requirements.txt`: Lista de dependencias de Python.
+- `.github/workflows/docker-image.yml`: Configuración de GitHub Actions para CI/CD.
+- `.env`: Archivo de configuración de variables de entorno (no incluido en el repositorio).
 
-## 🤝 Contributions
+## 🤝 Contribuciones
 
-Contributions are welcome. Please open an issue or a pull request to discuss any changes you would like to make.
+Las contribuciones son bienvenidas.
+Por favor, abre un issue o un pull request para discutir cualquier cambio que te gustaría hacer.
 
-## 📄 License
+## 📄 Licencia
 
-This project is licensed under the MIT Licence. See the `LICENSE` file for more details.
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
