@@ -1,6 +1,9 @@
 # 🚀 Exaroton Server Scheduler
 
-Este proyecto es una aplicación en Python que programa y gestiona el inicio de un servidor de Exaroton a una hora específica cada día.
+[![English](https://img.shields.io/badge/lang-en-blue.svg)](readme.md)
+
+Este proyecto es una aplicación en Python que programa y gestiona el inicio de 
+un servidor de Exaroton a una hora específica. 
 Utiliza Docker para la contenedorización y GitHub Actions para la integración y despliegue continuo.
 
 [![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
