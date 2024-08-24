@@ -14,5 +14,6 @@ ENV TIMEZONE=""
 ENV WEBHOOK_URL=""
 ENV CRON_SCHEDULE=""
 ENV ID_SERVER=""
+ENV LANGUAGE=""
 
 CMD ["python", "main.py"]
