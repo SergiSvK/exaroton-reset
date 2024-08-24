@@ -7,11 +7,34 @@ from exaroton import Exaroton
 from croniter import croniter
 from weebhook_send import WebhookSend
 
-# Variables de entorno
+
+def check_and_install_requirements():
+    """
+    Checks if the required libraries are installed and installs them if they are not.
+
+    Returns:
+    - None
+    """
+    with open('requirements.txt') as f:
+        requirements = f.read().splitlines()
+
+    for lib in requirements:
+        try:
+            __import__(lib)
+            print(f'{lib} is already installed')
+        except ImportError:
+            os.system(f'pip install {lib}')
+            print(f'{lib} has been installed')
+
+
+check_and_install_requirements()
+
+# Load environment variables
 exa = Exaroton(os.getenv("TOKEN"))
 id_server = os.getenv("ID_SERVER")
 timezone = pytz.timezone(os.getenv("TIMEZONE"))
-cron_schedule = os.getenv("CRON_SCHEDULE")
+cron_schedule_start = os.getenv("CRON_SCHEDULE_START")
+cron_schedule_stop = os.getenv("CRON_SCHEDULE_STOP")
 language = os.getenv("LANGUAGE")
 
 
@@ -51,36 +74,67 @@ def start_server():
         print(translations['server_start_error'].format(error=er))
 
 
+def stop_server():
+    """
+    Stops the server using the Exaroton client and sends a notification via webhook.
+
+    Returns:
+    - None
+    """
+    try:
+        print(exa.stop(id_server))
+        WebhookSend.send_message(translations['server_stopped'])
+        print(translations['server_stopped'])
+    except Exception as er:
+        WebhookSend.send_message(translations['server_stop_error'].format(error=er))
+        print(translations['server_stop_error'].format(error=er))
+
+
+def wait_until_next_cron(cron_schedule: str, timezone: pytz.timezone, action: str):
+    """
+    Calculates the next scheduled time for the given cron and waits until that time.
+
+    Args:
+    - cron_schedule (str): The cron schedule string.
+    - timezone (pytz.timezone): The timezone to calculate the time in.
+    - action (str): Describes the action to be performed (start or stop) for logging.
+
+    Returns:
+    - None
+    """
+    now_utc = datetime.datetime.now(pytz.utc)
+    cron = croniter(cron_schedule, now_utc)
+    next_run_time = cron.get_next(datetime.datetime)
+    next_run_time = next_run_time.astimezone(timezone)
+
+    delay_seconds = (next_run_time - now_utc).total_seconds()
+    delay_hours = delay_seconds / 3600
+
+    WebhookSend.send_message(translations[f'scheduled_{action}'].format(time=next_run_time.strftime("%H:%M"),
+                                                                        timezone=timezone, hours=f"{delay_hours:.2f}"))
+
+    time.sleep(delay_seconds)
+
+
 def schedule_cron_task():
     """
-    Schedules a task to start the server based on the cron schedule.
-    It calculates the next run time, waits until that time, and then starts the server.
+    Schedules tasks to start and stop the server based on the cron schedules.
+    It calculates the next run time for both start and stop, waits until those times,
+    and then executes the corresponding action.
     This process repeats indefinitely.
 
     Returns:
     - None
     """
     try:
-        now_utc = datetime.datetime.now(pytz.utc)
-        cron = croniter(cron_schedule, now_utc)
-        next_run_time = cron.get_next(datetime.datetime)
-        next_run_time = next_run_time.astimezone(timezone)
-
-        delay_seconds = (next_run_time - now_utc).total_seconds()
-        delay_hours = delay_seconds / 3600
-
-        WebhookSend.send_message(translations['scheduled_start'].format(time=next_run_time.strftime("%H:%M"),
-                                                                        timezone=timezone, hours=f"{delay_hours:.2f}"))
-
-        time.sleep(delay_seconds)
-        start_server()
-
         while True:
-            next_run_time = cron.get_next(datetime.datetime)
-            next_run_time = next_run_time.astimezone(timezone)
-            delay_seconds = (next_run_time - datetime.datetime.now(pytz.utc)).total_seconds()
-            time.sleep(delay_seconds)
+            # Wait until the next start time and start the server
+            wait_until_next_cron(cron_schedule_start, timezone, 'start')
             start_server()
+
+            # Wait until the next stop time and stop the server
+            wait_until_next_cron(cron_schedule_stop, timezone, 'stop')
+            stop_server()
     except Exception as er:
         WebhookSend.send_message(translations['cron_task_error'].format(error=er))
         print(translations['cron_task_error'].format(error=er))
