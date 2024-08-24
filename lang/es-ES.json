@@ -5,5 +5,8 @@
   "server_start_error": "❌ Error al iniciar el servidor: {error}",
   "cron_schedule_error": "❌ Error en la programación de la tarea cron: {error}",
   "main_script_error": "❌ Error en el script principal: {error}",
-  "scheduled_start": "⏰ Programado para iniciar el servidor a las {time} UTC ({timezone}). Faltan {hours} horas"
+  "scheduled_start": "⏰ Programado para iniciar el servidor a las {time} UTC ({timezone}). Faltan {hours} horas",
+  "server_stopped": "💔 Servidor detenido correctamente",
+  "server_stop_error": "❌ Error al detener el servidor: {error}",
+  "cron_task_error": "❌ Error en la tarea cron: {error}"
 }
