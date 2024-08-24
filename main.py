@@ -1,7 +1,7 @@
 import datetime
 import os
 import time
-
+import json
 import pytz
 from exaroton import Exaroton
 from croniter import croniter
@@ -12,6 +12,27 @@ exa = Exaroton(os.getenv("TOKEN"))
 id_server = os.getenv("ID_SERVER")
 timezone = pytz.timezone(os.getenv("TIMEZONE"))
 cron_schedule = os.getenv("CRON_SCHEDULE")
+language = os.getenv("LANGUAGE")
+
+
+def load_translations(lang: str) -> dict:
+    """
+    Loads the translations from the language file.
+
+    Args:
+    - language (str): The language code to load the translations from.
+
+    Returns:
+    - dict: The translations are loaded from the language file.
+    """
+    if not os.path.exists(f'lang/{lang}.json'):
+        raise FileNotFoundError(f'Language file not found: {lang}')
+
+    with open(f'lang/{lang}.json', 'r', encoding='utf-8') as file:
+        return json.load(file)
+
+
+translations = load_translations(language)
 
 
 def start_server():
@@ -23,11 +44,11 @@ def start_server():
     """
     try:
         print(exa.start(id_server))
-        WebhookSend.send_message("💚 Servidor iniciado correctamente")
-        print("Server iniciado")
+        WebhookSend.send_message(translations['server_started'])
+        print(translations['server_started'])
     except Exception as er:
-        WebhookSend.send_message(f"❌ Error al iniciar el servidor: {er}")
-        print(f"Error al iniciar el servidor: {er}")
+        WebhookSend.send_message(translations['server_start_error'].format(error=er))
+        print(translations['server_start_error'].format(error=er))
 
 
 def schedule_cron_task():
@@ -48,9 +69,8 @@ def schedule_cron_task():
         delay_seconds = (next_run_time - now_utc).total_seconds()
         delay_hours = delay_seconds / 3600
 
-        WebhookSend.send_message(f"⏰ Programado para iniciar el servidor a las "
-                                 f"{next_run_time.strftime('%H:%M')} UTC ({timezone.zone}). "
-                                 f"Faltan {delay_hours:.2f} horas")
+        WebhookSend.send_message(translations['scheduled_start'].format(time=next_run_time.strftime("%H:%M"),
+                                                                        timezone=timezone, hours=f"{delay_hours:.2f}"))
 
         time.sleep(delay_seconds)
         start_server()
@@ -62,26 +82,26 @@ def schedule_cron_task():
             time.sleep(delay_seconds)
             start_server()
     except Exception as er:
-        WebhookSend.send_message(f"❌ Error en la programación de la tarea cron: {er}")
-        print(f"Error en la programación de la tarea cron: {er}")
+        WebhookSend.send_message(translations['cron_task_error'].format(error=er))
+        print(translations['cron_task_error'].format(error=er))
 
 
 if __name__ == '__main__':
     """
     Main entry point of the script. Prints account and server information, then schedules the cron task.
     Read -> readme.md for more information.
-
-    Returns:
-    - None
     """
+
     try:
         print("==" * 50)
+        print(translations['account_info'])
         print(exa.get_account())
         print("==" * 50)
+        print(translations['server_info'])
         print(exa.get_server(id_server))
         print("==" * 50)
 
         schedule_cron_task()
     except Exception as e:
-        WebhookSend.send_message(f"❌ Error en el script principal: {e}")
-        print(f"Error en el script principal: {e}")
+        WebhookSend.send_message(translations['main_script_error'].format(error=e))
+        print(translations['main_script_error'].format(error=e))
