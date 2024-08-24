@@ -1,18 +1,32 @@
 # 🚀 Exaroton Server Scheduler
-
-This project is a Python application that schedules and manages the start of an Exaroton server at a specific time each day. It uses Docker for containerization and GitHub Actions for continuous integration and deployment.
-
 [![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![Fork](https://img.shields.io/github/forks/sergisvk/exaroton-reset?style=social)](https://github.com/sergisvk/exaroton-reset/fork)
 
+Select another language:
+
+[![Spanish](https://img.shields.io/badge/lang-es-red.svg)](docs/readme-es.md)
+
+The application will run and schedule the start of the Exaroton server at the specified time in the configured time zone. 
+T will also send notifications via a webhook.
+
+There are **two options** to run the application: Directly executing the script or using Docker. 
+After choosing one of the options, follow the steps below to install the application.
+Please note that you need to have an Exaroton account and an API token to use this application.
+
 ## 📋 Requirements
 
-- Python 3.10 🐍
-- Docker 🐳
-- GitHub Actions ⚙️
-- An Exaroton account 🌐
+> [!IMPORTANT]  
+> - Python 3.10 to latest 🐍
+> - An Exaroton account 🌐
+> - Docker 🐳 (optional)
 
-## 🛠️ Installation
+## 📑 Table of Contents
+
+
+
+
+
+##  ⭐ Direct Script Execution
 
 1. Clone the repository:
     ```sh
@@ -28,59 +42,51 @@ This project is a Python application that schedules and manages the start of an 
     WEBHOOK_URL=
     CRON_SCHEDULE="0 6 * * *"
     ID_SERVER=""
+    LANGUAGE="es-ES"
     ```
 
-### Explanation of each environment variable
+3. Install the dependencies:
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-- `TOKEN`: This is the Exaroton API token used to authenticate requests to the Exaroton API. You must get this token from your Exaroton account.
+4. Run the script:
+    ```sh
+    python main.py
+    ```
 
-- `TIMEZONE`: The time zone in which you want to schedule the server start. It must be in a recognized [tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) format (e.g., `Europe/Madrid`).
+## 🐋 Docker Execution
 
-- `WEBHOOK_URL`: The webhook URL where notifications will be sent. This can be a Discord webhook URL or another service that accepts webhooks.
+### Option 1: Docker Execution
 
-- `CRON_SCHEDULE`: The cron schedule for starting the server. In this case, it is set to start the server every day at 6:00 AM (`"0 6 * * *"`).
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/sergisvk/exaroton-reset.git
+    cd exaroton-reset
+    ```
 
-- `ID_SERVER`: The ID of your Exaroton server. This ID is unique for each server and is used to identify the server you want to start.
+2. Create a `.env` file in the root directory of the project and add the following environment variables:
 
-### Explanation of cron functionality
+    ```env
+    TOKEN=
+    TIMEZONE=Europe/Madrid
+    WEBHOOK_URL=
+    CRON_SCHEDULE="0 6 * * *"
+    ID_SERVER=""
+    LANGUAGE="es-ES"
+    ```
 
-The cron format is used to schedule tasks at specific intervals. The syntax of a cron expression is as follows:
-
-```cmd
-* * * * *
-| | | | |
-| | | | +---- Day of the week (0 - 7) (Sunday to Saturday, where 0 and 7 are Sunday)
-| | | +------ Month (1 - 12)
-| | +-------- Day of the month (1 - 31)
-| +---------- Hour (0 - 23)
-+------------ Minute (0 - 59)
-```
-
-Each field can contain one or more values, separated by commas. Values can be specific numbers, ranges of numbers, or special characters such as `*` (any value), `/` (increments), and `-` (ranges).
-
-#### Examples of cron expressions:
-
-- `0 6 * * *`: Runs the task at 6:00 AM every day.
-- `*/15 * * * *`: Runs the task every 15 minutes.
-- `0 0 1 * *`: Runs the task at midnight on the first day of every month.
-- `0 12 * * 1-5`: Runs the task at 12:00 PM (noon) from Monday to Friday.
-
-1. Build the Docker image and run the container:
+3. Build the Docker image and run the container:
     ```sh
     docker build -t exaroton-reset .
     docker run --env-file .env exaroton-reset
     ```
+   
+### Option 2: Docker Compose Execution
 
-## 🚀 Uso
-
-The application will run and schedule the start of the Exaroton server at the specified time in the configured time zone. It will also send notifications via a webhook.
-## 🚢 Deployment
-
-The project is configured to deploy automatically using GitHub Actions. Whenever a new version is released or a push is made to the `master` branch, a new Docker image will be built and published to the GitHub Container Registry.
-
-### Deployment with Docker Compose
-
-To deploy the project using Docker Compose, follow these steps:
+The project is configured to deploy automatically using GitHub Actions. 
+Whenever a new version is released or a push is made to the `master` branch, 
+a new Docker image will be built and published to the GitHub Container Registry.
 
 1. Create a `docker-compose.yml` file in the root directory of the project with the following content:
 
@@ -96,6 +102,7 @@ To deploy the project using Docker Compose, follow these steps:
           - WEBHOOK_URL=${WEBHOOK_URL}
           - ID_SERVER=${ID_SERVER}
           - CRON_SCHEDULE=${CRON_SCHEDULE}
+          - LANGUAGE=${LANGUAGE}
         restart: unless-stopped
     ```
 
