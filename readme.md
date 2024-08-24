@@ -49,8 +49,6 @@
     ```
 
 2. Create a `.env` file in the root directory of the project and add the following environment variables:
-> [!NOTE]
-> [Click here](#-explanation-of-environment-variables) to see the explanation of each environment variable.
 
     ```env
     TOKEN=
@@ -58,8 +56,9 @@
     WEBHOOK_URL=
     CRON_SCHEDULE="0 6 * * *"
     ID_SERVER=""
-    LANGUAGE="es-ES"
     ```
+   > [!NOTE]
+   > [Click here](#-explanation-of-environment-variables) to see the explanation of each environment variable.
 
 3. Install the dependencies:
     ```sh
@@ -172,6 +171,35 @@ Each field can contain one or more values, separated by commas. Values can be sp
 
 Contributions are welcome. Please open an issue or a pull request to discuss any changes you would like to make.
 
+[![GitHub Contributors](https://img.shields.io/github/contributors/sergisvk/exaroton-reset)](https://github.com/SergiSvK/exaroton-reset/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/sergisvk/exaroton-reset)](https://github.com/SergiSvK/exaroton-reset/issues)
+
+## 🪙 Donate
+
+This project is maintained by SergiSvK. If you find this project helpful, please consider making a donation.
+
+<div align="center">
+  <table align="center">
+    <tr>
+      <td align="center">
+        <a href="https://btcscan.org/address/3AWqbrfMp1Z36XPGNmuZQAmxWZmKDqKGjW" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg" alt="BTC Logo" width="50" height="50"/>
+          <br/>
+          <button>Donate BTC</button>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://etherscan.io/address/0x1D31ccEa10207FF603b0b837Ed8Fb47454aeeff6" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg" alt="ETH Logo" width="50" height="50"/>
+          <br/>
+          <button>Donate ETH</button>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
 ## 📄 License
 
-This project is licensed under the MIT Licence. See the `LICENSE` file for more details.
+This project is licensed under the MIT Licence. See the [LICENSE](LICENSE) file for more information.
