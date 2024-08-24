@@ -1,0 +1,9 @@
+{
+  "account_info": "Account Information",
+  "server_info": "Server Information",
+  "server_started": "💚 Server started successfully",
+  "server_start_error": "❌ Error starting the server: {error}",
+  "cron_schedule_error": "❌ Error in cron task scheduling: {error}",
+  "main_script_error": "❌ Error in the main script: {error}",
+  "scheduled_start": "⏰ Scheduled to start the server at {time} UTC ({timezone}). {hours} hours remaining"
+}

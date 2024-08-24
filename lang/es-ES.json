@@ -1,14 +1,9 @@
 {
-  "name": "$name$",
-  "version": "$version$",
-  "description": "$END$",
-  "main": "$main$",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/SergiSvK/ExarotonResetAPI.git"
-  },
-  "private": true
+  "account_info": "Información de la cuenta",
+  "server_info": "Información del servidor",
+  "server_started": "💚 Servidor iniciado correctamente",
+  "server_start_error": "❌ Error al iniciar el servidor: {error}",
+  "cron_schedule_error": "❌ Error en la programación de la tarea cron: {error}",
+  "main_script_error": "❌ Error en el script principal: {error}",
+  "scheduled_start": "⏰ Programado para iniciar el servidor a las {time} UTC ({timezone}). Faltan {hours} horas"
 }
