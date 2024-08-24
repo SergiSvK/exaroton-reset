@@ -2,24 +2,21 @@
   <h1>
     🚀 Exaroton Server Scheduler
     <br/>
+    <br/>
     <p align="center">
       <img src="docs/readme-banner.png" alt="Banner Exaroton">
    </p>
   </h1>
 
    [![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
-
    [![Docker Image Build](https://github.com/SergiSvK/exaroton-reset/actions/workflows/docker-image.yml/badge.svg)](https://github.com/SergiSvK/exaroton-reset/actions/workflows/docker-image.yml)
    [![Github Commits](https://img.shields.io/github/last-commit/sergisvk/exaroton-reset)](https://github.com/sergisvk/exaroton-reset)
-   [![Spanish](https://raw.githubusercontent.com/pedromxavier/flag-badges/main/badges/ES.svg)](docs/readme-es.md)
    [![GitHub License](https://img.shields.io/github/license/SergiSvK/exaroton-reset)](https://github.com/SergiSvK/exaroton-reset/blob/main/LICENSE)
-
-
-
-> [!NOTE]
-> The application will run and schedule the start of the Exaroton server at the specified time in the configured time zone.
-And it will send a notification to the specified webhook URL when the server is started.
+   [![Spanish](https://raw.githubusercontent.com/pedromxavier/flag-badges/main/badges/ES.svg)](docs/readme-es.md)
 </div>
+
+The application will run and schedule the start of the Exaroton server at the specified time in the configured time zone.
+And it will send a notification to the specified webhook URL when the server is started.
 
 ## 📋 Requirements
 
