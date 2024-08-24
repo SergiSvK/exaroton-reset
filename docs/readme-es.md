@@ -25,7 +25,7 @@
 
 ## 📋 Requisitos
 
-> [!IMPORTANTE]  
+> [!IMPORTANT]  
 > - Python 3.10 o más reciente 🐍
 > - Una cuenta de Exaroton 🌐
 > - Docker 🐳 (opcional)

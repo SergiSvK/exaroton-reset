@@ -14,18 +14,25 @@
   [![GitHub License](https://img.shields.io/github/license/SergiSvK/exaroton-reset)](https://github.com/SergiSvK/exaroton-reset/blob/main/LICENSE)
   ![Discord](https://img.shields.io/discord/301997437156065281?style=plastic&logo=discord&label=contact)
 
-  <h2>Choose Your Language</h2>
-  <table align="center">
-    <tr>
-      <td align="center">
-        <a href="docs/readme-es.md">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg" alt="Español" width="50" height="50"/>
-          <br/>
-          <button>Español</button>
-        </a>
-      </td>
-    </tr>
-  </table>
+<h2>Choose Your Language</h2>
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="docs/readme-es.md">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg" alt="Español" width="50" height="50"/>
+        <br/>
+        <button>Español</button>
+      </a>
+    </td>
+    <td align="center">
+      <a href="docs/readme-fr.md">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="Français" width="50" height="50"/>
+        <br/>
+        <button>Français</button>
+      </a>
+    </td>
+  </tr>
+</table>
 </div>
 
 <p align="center">
