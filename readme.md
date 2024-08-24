@@ -8,18 +8,30 @@
    </p>
   </h1>
 
-   [![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
-   [![Docker Image Build](https://github.com/SergiSvK/exaroton-reset/actions/workflows/docker-image.yml/badge.svg)](https://github.com/SergiSvK/exaroton-reset/actions/workflows/docker-image.yml)
-   [![Github Commits](https://img.shields.io/github/last-commit/sergisvk/exaroton-reset)](https://github.com/sergisvk/exaroton-reset)
-   [![Spanish](https://raw.githubusercontent.com/pedromxavier/flag-badges/main/badges/ES.svg)](docs/readme-es.md)
-   [![GitHub License](https://img.shields.io/github/license/SergiSvK/exaroton-reset)](https://github.com/SergiSvK/exaroton-reset/blob/main/LICENSE)
+  [![Python Version](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
+  [![Docker Image Build](https://github.com/SergiSvK/exaroton-reset/actions/workflows/docker-image.yml/badge.svg)](https://github.com/SergiSvK/exaroton-reset/actions/workflows/docker-image.yml)
+  [![Github Commits](https://img.shields.io/github/last-commit/sergisvk/exaroton-reset)](https://github.com/sergisvk/exaroton-reset)
+  [![GitHub License](https://img.shields.io/github/license/SergiSvK/exaroton-reset)](https://github.com/SergiSvK/exaroton-reset/blob/main/LICENSE)
+  ![Discord](https://img.shields.io/discord/301997437156065281?style=plastic&logo=discord&label=contact)
+
+  <h2>Choose Your Language</h2>
+  <table align="center">
+    <tr>
+      <td align="center">
+        <a href="docs/readme-es.md">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg" alt="Español" width="50" height="50"/>
+          <br/>
+          <button>Español</button>
+        </a>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <p align="center">
   The application will run and schedule the start of the Exaroton server at the specified time in the configured time zone.
   And it will send a notification to the specified webhook URL when the server is started.
 </p>
-
 
 ## 📋 Requirements
 
@@ -54,8 +66,10 @@
     TOKEN=
     TIMEZONE=Europe/Madrid
     WEBHOOK_URL=
-    CRON_SCHEDULE="0 6 * * *"
+    CRON_SCHEDULE_START="0 6 * * *" # Start the server at 6:00 AM
+    CRON_SCHEDULE_STOP="0 22 * * *" # Stop the server at 10:00 PM
     ID_SERVER=""
+    LANGUAGE=""
     ```
    > [!NOTE]
    > [Click here](#-explanation-of-environment-variables) to see the explanation of each environment variable.
@@ -86,10 +100,13 @@
     TOKEN=
     TIMEZONE=Europe/Madrid
     WEBHOOK_URL=
-    CRON_SCHEDULE="0 6 * * *"
+    CRON_SCHEDULE_START="0 6 * * *" # Start the server at 6:00 AM
+    CRON_SCHEDULE_STOP="0 22 * * *" # Stop the server at 10:00 PM
     ID_SERVER=""
     LANGUAGE="es-ES"
     ```
+   > [!NOTE]
+   > [Click here](#-explanation-of-environment-variables) to see the explanation of each environment variable.
 
 3. Build the Docker image and run the container:
     ```sh
@@ -115,7 +132,8 @@
           - TIMEZONE=${TIMEZONE}
           - WEBHOOK_URL=${WEBHOOK_URL}
           - ID_SERVER=${ID_SERVER}
-          - CRON_SCHEDULE=${CRON_SCHEDULE}
+          - CRON_SCHEDULE_START=${CRON_SCHEDULE_START}
+          - CRON_SCHEDULE_STOP=${CRON_SCHEDULE_STOP}
           - LANGUAGE=${LANGUAGE}
         restart: unless-stopped
     ```
@@ -147,11 +165,16 @@ This will start the container using the latest image published in the GitHub Con
 
 - `WEBHOOK_URL`: The webhook URL where notifications will be sent. This can be a Discord webhook URL or another service that accepts webhooks.
 
-- `CRON_SCHEDULE`: The cron schedule for starting the server. In this case, it is set to start the server every day at 6:00 AM (`"0 6 * * *"`).
+- `CRON_SCHEDULE_START`: The cron schedule for starting the server. In this case, it is set to start the server every day at 6:00 AM (`"0 6 * * *"`).
+
+- `CRON_SCHEDULE_STOP`: The cron schedule for stopping the server. In this case, it is set to stop the server every day at 10:00 PM (`"0 22 * * *"`).
 
 - `ID_SERVER`: The ID of your Exaroton server. This ID is unique for each server and is used to identify the server you want to start.
 
-### Explanation of cron functionality
+- `LANGUAGE`: The language in which the notifications will be sent. 
+   The available languages are `en-UK`, `es-ES`,`fr-FR`, `pt-PT`
+
+### Explanation of CRON functionality
 
 The cron format is used to schedule tasks at specific intervals. The syntax of a cron expression is as follows:
 

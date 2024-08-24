@@ -1,22 +1,48 @@
-# 🚀 Exaroton Server Scheduler
+<div align="center">
+  <h1>
+    🚀 Controlador de Servidor Exaroton
+    <br/>
+    <br/>
+    <p align="center">
+      <img src="readme-banner.png" alt="Banner Exaroton">
+   </p>
+  </h1>
 
-[![English](https://img.shields.io/badge/lang-en-blue.svg)](readme.md)
+   [![Versión de Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
+   [![Construcción de Imagen Docker](https://github.com/SergiSvK/exaroton-reset/actions/workflows/docker-image.yml/badge.svg)](https://github.com/SergiSvK/exaroton-reset/actions/workflows/docker-image.yml)
+   [![Commits en Github](https://img.shields.io/github/last-commit/sergisvk/exaroton-reset)](https://github.com/sergisvk/exaroton-reset)
+   [![Licencia en GitHub](https://img.shields.io/github/license/SergiSvK/exaroton-reset)](https://github.com/SergiSvK/exaroton-reset/blob/main/LICENSE)
+   [![Español](https://raw.githubusercontent.com/pedromxavier/flag-badges/main/badges/ES.svg)](docs/readme-es.md)
+   ![Discord](https://img.shields.io/discord/301997437156065281?style=plastic&logo=discord&label=contact)
 
-Este proyecto es una aplicación en Python que programa y gestiona el inicio de 
-un servidor de Exaroton a una hora específica. 
-Utiliza Docker para la contenedorización y GitHub Actions para la integración y despliegue continuo.
+</div>
 
-[![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
-[![Fork](https://img.shields.io/github/forks/sergisvk/exaroton-reset?style=social)](https://github.com/sergisvk/exaroton-reset/fork)
+<p align="center">
+  La aplicación se ejecutará y programará el inicio del servidor Exaroton a la hora especificada en la zona horaria configurada.
+  Además, enviará una notificación a la URL del webhook especificado cuando el servidor se inicie.
+</p>
+
 
 ## 📋 Requisitos
 
-- Python 3.10 🐍
-- Docker 🐳
-- GitHub Actions ⚙️
-- Una cuenta en Exaroton 🌐
+> [!IMPORTANTE]  
+> - Python 3.10 o más reciente 🐍
+> - Una cuenta de Exaroton 🌐
+> - Docker 🐳 (opcional)
 
-## 🛠️ Instalación
+## 📑 Tabla de Contenidos
+
+- [🚀 Planificador de Servidor Exaroton](#-planificador-de-servidor-exaroton)
+- [📋 Requisitos](#-requisitos)
+- [⭐ Ejecución Directa del Script](#-ejecución-directa-del-script)
+- [🐳 Ejecución con Docker](#-ejecución-con-docker)
+  - [Opción 1: Ejecución con Docker](#opción-1-ejecución-con-docker)
+  - [Opción 2: Ejecución con Docker Compose](#opción-2-ejecución-con-docker-compose)
+- [🌱 Explicación de Variables de Entorno](#-explicación-de-variables-de-entorno)
+- [🤝 Contribuciones](#-contribuciones)
+- [📄 Licencia](#-licencia)
+
+## ⭐ Ejecución Directa del Script
 
 1. Clona el repositorio:
     ```sh
@@ -24,72 +50,64 @@ Utiliza Docker para la contenedorización y GitHub Actions para la integración 
     cd exaroton-reset
     ```
 
-2. Crea un archivo `.env` en el directorio raíz del proyecto y añade las siguientes variables de entorno:
+2. Crea un archivo `.env` en el directorio raíz del proyecto y agrega las siguientes variables de entorno:
 
     ```env
     TOKEN=
     TIMEZONE=Europe/Madrid
     WEBHOOK_URL=
-    CRON_SCHEDULE="0 6 * * *"
+    CRON_SCHEDULE_START="0 6 * * *" # Inicia el servidor a las 6:00 AM
+    CRON_SCHEDULE_STOP="0 22 * * *" # Detiene el servidor a las 10:00 PM
     ID_SERVER=""
+    LANGUAGE=""
+    ```
+   > [!NOTA]
+   > [Haz clic aquí](#-explicación-de-variables-de-entorno) para ver la explicación de cada variable de entorno.
+
+3. Instala las dependencias:
+    ```sh
+    pip install -r requirements.txt
     ```
 
-### Explicación de cada variable de entorno
+4. Ejecuta el script:
+    ```sh
+    python main.py
+    ```
 
-- `TOKEN`: Este es el token de API de Exaroton que se utiliza para autenticar las solicitudes a la API de Exaroton. Debes obtener este token desde tu cuenta de Exaroton. Simply get an API Token from your Account and you're good to go.
+## 🐋 Ejecución con Docker
 
-- `TIMEZONE`: La zona horaria en la que deseas programar el inicio del servidor. Debe estar en un formato reconocido [tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (por ejemplo, `Europe/Madrid`).
+### Opción 1: Ejecución con Docker
 
-- `WEBHOOK_URL`: La URL del webhook donde se enviarán las notificaciones. Esto puede ser una URL de webhook de Discord u otro servicio que acepte webhooks.
+1. Clona el repositorio:
+    ```sh
+    git clone https://github.com/sergisvk/exaroton-reset.git
+    cd exaroton-reset
+    ```
 
-- `CRON_SCHEDULE`: La programación cron para iniciar el servidor. En este caso, está configurado para iniciar el servidor todos los días a las 6:00 AM (`"0 6 * * *"`).
+2. Crea un archivo `.env` en el directorio raíz del proyecto y agrega las siguientes variables de entorno:
 
-- `ID_SERVER`: El ID de tu servidor de Exaroton. Este ID es único para cada servidor y se utiliza para identificar el servidor que deseas iniciar.
+    ```env
+    TOKEN=
+    TIMEZONE=Europe/Madrid
+    WEBHOOK_URL=
+    CRON_SCHEDULE_START="0 6 * * *" # Inicia el servidor a las 6:00 AM
+    CRON_SCHEDULE_STOP="0 22 * * *" # Detiene el servidor a las 10:00 PM
+    ID_SERVER=""
+    LANGUAGE="es-ES"
+    ```
+   > [!NOTA]
+   > [Haz clic aquí](#-explicación-de-variables-de-entorno) para ver la explicación de cada variable de entorno.
 
-### Explicación del funcionamiento del cron
-
-El formato de cron se utiliza para programar tareas en intervalos específicos.
-La sintaxis de una expresión cron es la siguiente:
-
-```cmd
-* * * * *
-| | | | |
-| | | | +---- Día de la semana (0 - 7) (domingo a sábado, donde 0 y 7 son domingo)
-| | | +------ Mes (1 - 12)
-| | +-------- Día del mes (1 - 31)
-| +---------- Hora (0 - 23)
-+------------ Minuto (0 - 59)
-```
-
-Cada campo puede contener uno o más valores, separados por comas.
-Los valores pueden ser números específicos, rangos de números, o caracteres especiales como `*` (cualquier valor), `/` (incrementos), y `-` (rangos).
-
-#### Ejemplos de expresiones cron:
-
-- `0 6 * * *`: Ejecuta la tarea todos los días a las 6:00 AM.
-- `*/15 * * * *`: Ejecuta la tarea cada 15 minutos.
-- `0 0 1 * *`: Ejecuta la tarea a la medianoche del primer día de cada mes.
-- `0 12 * * 1-5`: Ejecuta la tarea a las 12:00 PM de lunes a viernes.
-
-1. Construye y ejecuta el contenedor Docker:
+3. Construye la imagen de Docker y ejecuta el contenedor:
     ```sh
     docker build -t exaroton-reset .
     docker run --env-file .env exaroton-reset
     ```
+   
+### Opción 2: Ejecución con Docker Compose
 
-## 🚀 Uso
-
-La aplicación se ejecutará y programará el inicio del servidor de Exaroton a la hora especificada en la zona horaria configurada.
-También enviará notificaciones a través de un webhook.
-
-## 🚢 Despliegue
-
-El proyecto está configurado para desplegarse automáticamente utilizando GitHub Actions.
-Cada vez que se publique una nueva versión o se haga un push a la rama `master`, se construirá y publicará una nueva imagen Docker en el GitHub Container Registry.
-
-### Despliegue con Docker Compose
-
-Para desplegar el proyecto utilizando Docker Compose, sigue estos pasos:
+> [!TIP]
+> En mi opinión, esta es la mejor manera de ejecutar el contenedor usando Docker Compose.
 
 1. Crea un archivo `docker-compose.yml` en el directorio raíz del proyecto con el siguiente contenido:
 
@@ -104,31 +122,99 @@ Para desplegar el proyecto utilizando Docker Compose, sigue estos pasos:
           - TIMEZONE=${TIMEZONE}
           - WEBHOOK_URL=${WEBHOOK_URL}
           - ID_SERVER=${ID_SERVER}
-          - CRON_SCHEDULE=${CRON_SCHEDULE}
+          - CRON_SCHEDULE_START=${CRON_SCHEDULE_START}
+          - CRON_SCHEDULE_STOP=${CRON_SCHEDULE_STOP}
+          - LANGUAGE=${LANGUAGE}
         restart: unless-stopped
     ```
 
-2. Ejecuta el siguiente comando para iniciar el contenedor:
 
-    ```sh
-    docker-compose up -d
+2. Ejecuta el siguiente comando para iniciar el contenedor:
+   Otra forma de ejecutar el contenedor usando Docker Compose es
+   pasar el archivo `.env` en la sección `environment` del archivo `docker-compose.yml`.
+
+    ```yaml
+    version: '3.8'
+
+    services:
+      exaroton-reset:
+        image: ghcr.io/sergisvk/exaroton-reset:latest
+        env_file:
+          - .env
+        restart: unless-stopped
     ```
 
-Esto iniciará el contenedor utilizando la imagen más reciente publicada en el GitHub Container Registry y las variables de entorno definidas en el archivo `.env`.
+Esto iniciará el contenedor utilizando la última imagen publicada en el Registro de Contenedores de GitHub y las variables de entorno definidas en el archivo `.env`.
 
-## 📂 Archivos Importantes
+## 🌱 Explicación de Variables de Entorno
 
-- `main.py`: Contiene la lógica principal de la aplicación.
-- `Dockerfile`: Define cómo se construye la imagen Docker.
-- `requirements.txt`: Lista de dependencias de Python.
-- `.github/workflows/docker-image.yml`: Configuración de GitHub Actions para CI/CD.
-- `.env`: Archivo de configuración de variables de entorno (no incluido en el repositorio).
+- `TOKEN`: Este es el token de la API de Exaroton que se utiliza para autenticar las solicitudes a la API de Exaroton. Debes obtener este token desde tu cuenta de Exaroton.
+
+- `TIMEZONE`: La zona horaria en la que deseas programar el inicio del servidor. Debe estar en un formato [tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) reconocido (por ejemplo, `Europe/Madrid`).
+
+- `WEBHOOK_URL`: La URL del webhook donde se enviarán las notificaciones. Esto puede ser una URL de webhook de Discord u otro servicio que acepte webhooks.
+
+- `CRON_SCHEDULE_START`: El cronograma para iniciar el servidor. En este caso, está configurado para iniciar el servidor todos los días a las 6:00 AM (`"0 6 * * *"`).
+
+- `CRON_SCHEDULE_STOP`: El cronograma para detener el servidor. En este caso, está configurado para detener el servidor todos los días a las 10:00 PM (`"0 22 * * *"`).
+
+- `ID_SERVER`: El ID de tu servidor Exaroton. Este ID es único para cada servidor y se utiliza para identificar el servidor que deseas iniciar.
+
+- `LANGUAGE`: El idioma en el que se enviarán las notificaciones.
+   Los idiomas disponibles son `en-UK`, `es-ES`, `fr-FR`, `pt-PT`.
+
+### Explicación de la Funcionalidad CRON
+
+El formato cron se utiliza para programar tareas en intervalos específicos.
+La sintaxis de una expresión cron es la siguiente:
+
+```cmd
+* * * * *
+| | | | |
+| | | | +---- Día de la semana (0 - 7) (Domingo a Sábado, donde 0 y 7 son Domingo)
+| | | +------ Mes (1 - 12)
+| | +-------- Día del mes (1 - 31)
+| +---------- Hora (0 - 23)
++------------ Minuto (0 - 59)
+```
+
+Cada campo puede contener uno o más valores, separados por comas. 
+Los valores pueden ser números específicos, rangos de números o caracteres especiales como `*` (cualquier valor), `/` (incrementos) y `-` (rangos).
 
 ## 🤝 Contribuciones
 
 Las contribuciones son bienvenidas.
-Por favor, abre un issue o un pull request para discutir cualquier cambio que te gustaría hacer.
+Por favor, abre un issue o un pull request para discutir cualquier cambio que desees realizar.
+
+[![Contribuyentes en GitHub](https://img.shields.io/github/contributors/sergisvk/exaroton-reset)](https://github.com/SergiSvK/exaroton-reset/pulls)
+[![Issues en GitHub](https://img.shields.io/github/issues/sergisvk/exaroton-reset)](https://github.com/SergiSvK/exaroton-reset/issues)
+
+## 🪙 Donaciones
+
+Este proyecto es mantenido por SergiSvK. Si encuentras este proyecto útil, considera hacer una donación.
+
+<div align="center">
+  <table align="center">
+    <tr>
+      <td align="center">
+        <a href="https://btcscan.org/address/3AWqbrfMp1Z36XPGNmuZQAmxWZmKDqKGjW" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg" alt="BTC Logo" width="50" height="50"/>
+          <br/>
+          <button>Donar BTC</button>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://etherscan.io/address/0x1D31ccEa10207FF603b0b837Ed8Fb47454aeeff6" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg" alt="ETH Logo" width="50" height="50"/>
+          <br/>
+          <button>Donar ETH</button>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
+
 
 ## 📄 Licencia
 
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más información.
