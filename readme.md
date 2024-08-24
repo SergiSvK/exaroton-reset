@@ -1,17 +1,19 @@
 # 🚀 Exaroton Server Scheduler
+
+-------------------
 [![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![Fork](https://img.shields.io/github/forks/sergisvk/exaroton-reset?style=social)](https://github.com/sergisvk/exaroton-reset/fork)
+[![Pull Request](https://img.shields.io/github/issues-pr/
 
+-------------------
 Select another language:
 
 [![Spanish](https://img.shields.io/badge/lang-es-red.svg)](docs/readme-es.md)
 
 The application will run and schedule the start of the Exaroton server at the specified time in the configured time zone. 
-T will also send notifications via a webhook.
+And it will send a notification to the specified webhook URL when the server is started.
 
-There are **two options** to run the application: Directly executing the script or using Docker. 
-After choosing one of the options, follow the steps below to install the application.
-Please note that you need to have an Exaroton account and an API token to use this application.
+There are **two options** to run the application: **Script or using Docker.**
 
 ## 📋 Requirements
 
@@ -35,6 +37,8 @@ Please note that you need to have an Exaroton account and an API token to use th
     ```
 
 2. Create a `.env` file in the root directory of the project and add the following environment variables:
+> [!NOTE]
+> [Click here](#-explanation-of-environment-variables) to see the explanation of each environment variable.
 
     ```env
     TOKEN=
@@ -84,9 +88,8 @@ Please note that you need to have an Exaroton account and an API token to use th
    
 ### Option 2: Docker Compose Execution
 
-The project is configured to deploy automatically using GitHub Actions. 
-Whenever a new version is released or a push is made to the `master` branch, 
-a new Docker image will be built and published to the GitHub Container Registry.
+> [!TIP]
+> In my opinion, this is the best way to run the container using Docker Compose.
 
 1. Create a `docker-compose.yml` file in the root directory of the project with the following content:
 
@@ -106,21 +109,52 @@ a new Docker image will be built and published to the GitHub Container Registry.
         restart: unless-stopped
     ```
 
-2. Run the following command to start the container:
 
-    ```sh
-    docker-compose up -d
+2. Run the following command to start the container:
+   Another way to run the container using Docker Compose is
+   to pass the `.env` file in the `environment` section of the `docker-compose.yml` file.
+
+    ```yaml
+    version: '3.8'
+
+    services:
+      exaroton-reset:
+        image: ghcr.io/sergisvk/exaroton-reset:latest
+        env_file:
+          - .env
+        restart: unless-stopped
     ```
 
 This will start the container using the latest image published in the GitHub Container Registry and the environment variables defined in the `.env` file.
 
-## 📂 Important Files
 
-- `main.py`: Contains the main logic of the application.
-- `Dockerfile`: Defines how the Docker image is built.
-- `requirements.txt`: List of Python dependencies.
-- `.github/workflows/docker-image.yml`: GitHub Actions configuration for CI/CD.
-- `.env`: Environment variable configuration file (not included in the repository).
+## 🌱 Explanation of Environment Variables
+
+- `TOKEN`: This is the Exaroton API token used to authenticate requests to the Exaroton API. You must get this token from your Exaroton account.
+
+- `TIMEZONE`: The time zone in which you want to schedule the server start. It must be in a recognized [tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) format (e.g., `Europe/Madrid`).
+
+- `WEBHOOK_URL`: The webhook URL where notifications will be sent. This can be a Discord webhook URL or another service that accepts webhooks.
+
+- `CRON_SCHEDULE`: The cron schedule for starting the server. In this case, it is set to start the server every day at 6:00 AM (`"0 6 * * *"`).
+
+- `ID_SERVER`: The ID of your Exaroton server. This ID is unique for each server and is used to identify the server you want to start.
+
+### Explanation of cron functionality
+
+The cron format is used to schedule tasks at specific intervals. The syntax of a cron expression is as follows:
+
+```cmd
+* * * * *
+| | | | |
+| | | | +---- Day of the week (0 - 7) (Sunday to Saturday, where 0 and 7 are Sunday)
+| | | +------ Month (1 - 12)
+| | +-------- Day of the month (1 - 31)
+| +---------- Hour (0 - 23)
++------------ Minute (0 - 59)
+```
+
+Each field can contain one or more values, separated by commas. Values can be specific numbers, ranges of numbers, or special characters such as `*` (any value), `/` (increments), and `-` (ranges).
 
 ## 🤝 Contributions
 
