@@ -78,8 +78,8 @@
     ID_SERVER=""
     LANGUAGE=""
     ```
-   > [!NOTE]
-   > [Click here](#-explanation-of-environment-variables) to see the explanation of each environment variable.
+> [!NOTE]  
+> [Click here](#-explanation-of-environment-variables) to see the explanation of each environment variable.
 
 3. Install the dependencies:
     ```sh
@@ -112,8 +112,8 @@
     ID_SERVER=""
     LANGUAGE="es-ES"
     ```
-   > [!NOTE]
-   > [Click here](#-explanation-of-environment-variables) to see the explanation of each environment variable.
+> [!NOTE]  
+> [Click here](#-explanation-of-environment-variables) to see the explanation of each environment variable.
 
 3. Build the Docker image and run the container:
     ```sh
