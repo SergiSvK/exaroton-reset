@@ -61,8 +61,8 @@
     ID_SERVER=""
     LANGUAGE=""
     ```
-   > [!NOTA]
-   > [Haz clic aquí](#-explicación-de-variables-de-entorno) para ver la explicación de cada variable de entorno.
+> [!NOTE]
+> [Haz clic aquí](#-explicación-de-variables-de-entorno) para ver la explicación de cada variable de entorno.
 
 3. Instala las dependencias:
     ```sh
@@ -95,8 +95,8 @@
     ID_SERVER=""
     LANGUAGE="es-ES"
     ```
-   > [!NOTA]
-   > [Haz clic aquí](#-explicación-de-variables-de-entorno) para ver la explicación de cada variable de entorno.
+> [!NOTE]
+> [Haz clic aquí](#-explicación-de-variables-de-entorno) para ver la explicación de cada variable de entorno.
 
 3. Construye la imagen de Docker y ejecuta el contenedor:
     ```sh
